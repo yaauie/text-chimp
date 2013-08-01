@@ -1,0 +1,7 @@
+---
+contact:
+  name:     YOUR_CONTACT_NAME_HERE
+  address:  YOUR_PHONE_NUMBER_OR_EMAIL_ADDRESS_HERE
+mailchimp:
+  apikey:   YOUR_MAILCHIMP_API_KEY_HERE
+  list_id:  YOUR_MAILCHIMP_LIST_ID_HERE
