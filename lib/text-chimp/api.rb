@@ -29,15 +29,24 @@ module TextChimp
       puts params.inspect
       email = params[:Body].scan(Patterns::EMAIL_REGEXP).first
       if email
-        # valid e-mail address. Subscribe
-        # @TODO: ACTUALLY SUBSCRIBE
+        begin
+          # valid e-mail address. Subscribe
+          # @TODO: ACTUALLY SUBSCRIBE
 
 
 
 
-        Twilio::TwiML::Response.new do |r|
-          r.Sms "The e-mail address #{email} has been subscribed. Thank you!"
-        end.text.extend(ExEmEl)
+          Twilio::TwiML::Response.new do |r|
+            r.Sms "The e-mail address #{email} has been subscribed. Thank you!"
+          end.text.extend(ExEmEl)
+        rescue Exception
+          Twilio::TwiML::Response.new do |r|
+            r.Sms "OH NO. Something went wrong :(\n" +
+                  "Please try again later.\n" +
+                  "If the problem persists, contact #{CONFIG[:contact][:name]} " +
+                  "at #{CONFIG[:contact][:address]}"
+          end.text.extend(ExEmEl)
+        end
         # return success response.
       else
         Twilio::TwiML::Response.new do |r|
