@@ -30,11 +30,12 @@ module TextChimp
       email = params[:Body].scan(Patterns::EMAIL_REGEXP).first
       if email
         begin
-          # valid e-mail address. Subscribe
-          # @TODO: ACTUALLY SUBSCRIBE
-
-
-
+          subscribe_params = {email_address:   email,
+                              id:              CONFIG[:mailchimp][:list_id],
+                              update_existing: true,
+                              send_welcome:    true}
+          result = MAILCHIMP_CLIENT.list_subscribe(subscribe_params)
+          raise "Couldn't subscibe :(" unless result
 
           Twilio::TwiML::Response.new do |r|
             r.Sms "The e-mail address #{email} has been subscribed. Thank you!"

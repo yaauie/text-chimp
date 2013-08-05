@@ -17,4 +17,8 @@ rescue
   raise "There was a problem loading config from text-chimp.yaml: #{$!}"
 end
 
+# TODO: put this elsewhere?
+require 'mailchimp'
+MAILCHIMP_CLIENT = Mailchimp::API.new(CONFIG[:mailchimp][:apikey])
+
 run TextChimp::API
